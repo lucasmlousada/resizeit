@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#check if have a parameter
 if [ "x""$1" = "x" ];
 then
     echo " -- ERROR --"
@@ -7,6 +7,15 @@ then
     exit 1
 fi
 
+#check if its a valid parameter
+if [[ $(ls -A $1 2> /dev/null ) ]]; then
+    echo "Files found...continuing"
+else
+    echo "No files found or folder not found"
+    exit 1
+fi
+
+#Help message
 if [ "$1" = "-h" ];
 then
     echo "Usage is ./resizeit.sh Path/to/image/folder"
@@ -20,6 +29,7 @@ then
     exit 1
 fi
 
+#check if gm is installed
 if [ $(which gm | wc -l) -eq 0 ]; then
         echo "GraphicsMagick is missing from your system. Please download the latest version:"
         echo "OS X: brew install graphicsmagick"
@@ -28,6 +38,7 @@ if [ $(which gm | wc -l) -eq 0 ]; then
         exit
 fi
 
+#check if imageconvert is installed
 if [ $(which convert | wc -l) -eq 0 ]; then
         echo "ImageMagick is missing from your system. Please download the latest version:"
         echo "OS X: brew install imagemagick"
@@ -35,7 +46,6 @@ if [ $(which convert | wc -l) -eq 0 ]; then
 	    echo "RedHat/CentOS: yum install imagemagick"
         exit
 fi
-
 
 #Check files with spaces
 cd $1
