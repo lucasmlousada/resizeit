@@ -42,7 +42,10 @@ mkdir -p Convert_images
 mkdir -p ScaleMogrify_images
 mkdir -p KeepAspectRatio_images
 mkdir -p GM_images
-
+#Check files with spaces
+cd $1
+for f in *\ *; do mv "$f" "${f// /__}"; done
+cd ..
 #Get the files
 files=($(ls $1))
 
